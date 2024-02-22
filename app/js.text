@@ -1,0 +1,46 @@
+node
+Welcome to Node.js v21.0.0.
+Type ".help" for more information.
+> function getop(op){
+... if (op === "add") return (function (a,b){ return a + b});
+... if (op === "sub") return ( function (a,b) { return a - b });
+... }
+undefined
+> let Myfunction1 = getop(add);
+Uncaught ReferenceError: add is not defined
+y been declared
+> let Myfunction11 = getop("add");
+undefined
+> Myfunction11(2,3);
+5
+> function foo2() {return "foo";}
+undefined
+> const arrowadd + (a,b) => a + b;
+const arrowadd + (a,b) => a + b;
+      ^^^^^^^^
+
+Uncaught SyntaxError: Missing initializer in const declaration
+> const arrowAdd + (a,b) => a + b;
+      ^^^^^^^^
+
+Uncaught SyntaxError: Missing initializer in const declaration      
+>  const arrowAdd = (a,b) => a + b ;
+>  const arrowAdd = (a,b) =>{ console.log(a); return  a + b };      
+Uncaught SyntaxError: Identifier 'arrowAdd' has already been declared
+>  const arrowAddAlternate = (a,b) =>{ console.log(a); return  a + b };
+undefined
+> arrowAddAlternate(4,5);
+4
+9
+> arrowAdd(5,4);
+9
+> ( () +> arrowAdd(3,4))();
+( () +> arrowAdd(3,4))();
+   ^
+
+Uncaught SyntaxError: Unexpected token ')'
+> ( () => arrowAdd(3,4))();
+7
+> .EXIT
+Invalid REPL keyword
+> .exit
