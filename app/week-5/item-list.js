@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Item from './item';
 import itemsData from './items.json'; 
 
