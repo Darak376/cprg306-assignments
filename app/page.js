@@ -21,5 +21,8 @@ export default function HomePage() {
                 <Link href="/week-6" className="bg-cyan-900 text-black font-bold py-5 px-7 text-yellow-300 transition duration-200">
                   Week6
                 </Link>
+                <Link href="/week-7" className="bg-cyan-900 text-black font-bold py-5 px-7 text-yellow-300 transition duration-200">
+                  Week7
+                </Link>
       </main>
     );}
