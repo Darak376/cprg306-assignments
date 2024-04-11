@@ -1,23 +1,39 @@
-"use client";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import ItemList from "./item-list";
 import NewItem from "./new-item";
-import itemsData from "./items.json";
 import MealIdeas from "./meal-ideas";
+import { getItems, addItem } from "./shopping-list-service";
 
 function Page() {
-  const [items, setItems] = useState(itemsData);
+  const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState(null);
 
-  const handleAddItem = (newItem) => {
-    setItems((prevItems) => [...prevItems, newItem]);
+  useEffect(() => {
+    loadItems();
+  }, []);
+
+  const loadItems = async () => {
+    try {
+      const fetchedItems = await getItems();
+      setItems(fetchedItems);
+    } catch (error) {
+      console.error("Error loading items:", error);
+    }
+  };
+
+  const handleAddItem = async (newItem) => {
+    try {
+      const newItemId = await addItem(newItem);
+      setItems((prevItems) => [...prevItems, { id: newItemId, data: newItem }]);
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
   };
 
   const handleItemSelect = (selectedItem) => {
     const cleanedItemName = selectedItem.name
       .replace(/ 🥛|🍞|🥚|🍌|🥦|🍗|🍝|🧻|🍽️|🧼|/g, "")
       .split(",")[0];
-    
     setSelectedItemName(cleanedItemName);
   };
 
