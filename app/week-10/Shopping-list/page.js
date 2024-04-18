@@ -1,32 +1,41 @@
+"use client";
 import { useState, useEffect } from "react";
 import ItemList from "./item-list";
 import NewItem from "./new-item";
 import MealIdeas from "./meal-ideas";
-import { getItems, addItem } from "./shopping-list-service";
-
+import { getItems, addItem } from "../_services/shopping-list-service";
+import { useUserAuth } from "../utils/auth-context";
 function Page() {
+  const { user } = useUserAuth();
   const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState(null);
 
   useEffect(() => {
+    const loadItems = async () => {
+      if (user) {
+        try {
+          const fetchedItems = await getItems(user.uid);
+          console.log(fetchedItems);
+          setItems(fetchedItems);
+        } catch (error) {
+          console.error("Error loading items:", error);
+        }
+      }
+    };
     loadItems();
-  }, []);
-
-  const loadItems = async () => {
-    try {
-      const fetchedItems = await getItems();
-      setItems(fetchedItems);
-    } catch (error) {
-      console.error("Error loading items:", error);
-    }
-  };
+  }, [user]);
 
   const handleAddItem = async (newItem) => {
-    try {
-      const newItemId = await addItem(newItem);
-      setItems((prevItems) => [...prevItems, { id: newItemId, data: newItem }]);
-    } catch (error) {
-      console.error("Error adding item:", error);
+    if (user){
+      try {
+        const newItemId = await addItem(user.uid, newItem);
+        setItems((prevItems) => [
+          ...prevItems,
+          { id: newItemId, data: newItem },
+        ]);
+      } catch (error) {
+        console.error("Error adding item:", error);
+      }
     }
   };
 

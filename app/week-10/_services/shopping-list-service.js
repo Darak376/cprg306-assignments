@@ -1,12 +1,14 @@
-import { db } from "../_utils/firebase";
+import { db } from "../utils/firebase";
 import { collection, getDocs, addDoc, query } from "firebase/firestore";
 
 export const getItems = async (userId) => {
   const items = [];
   const itemsCollection = collection(db, `users/${userId}/items`);
+  console.log("items collection is run");
   const querySnapshot = await getDocs(itemsCollection);
+  console.log("query snapshot is run");
   querySnapshot.forEach((doc) => {
-    items.push({ id: doc.id, data: doc.data() });
+    items.push( doc.data());
   });
   return items;
 };
